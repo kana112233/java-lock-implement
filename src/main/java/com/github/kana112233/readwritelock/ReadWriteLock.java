@@ -6,12 +6,27 @@ import java.util.Map;
 public class ReadWriteLock {
 
     private Map<Thread, Integer> readingThreads =
-            new HashMap<Thread, Integer>();
+            new HashMap<>();
 
     private int writeAccesses = 0;
     private int writeRequests = 0;
     private Thread writingThread = null;
 
+    public int getReadCount() {
+        int sum = 0;
+        for (Integer value : readingThreads.values()) {
+            sum += value;
+        }
+        return sum;
+    }
+
+    public int getWriteAccesses() {
+        return writeAccesses;
+    }
+
+    public int getWriteRequests() {
+        return writeRequests;
+    }
 
     public synchronized void lockRead() throws InterruptedException {
         Thread callingThread = Thread.currentThread();
@@ -19,8 +34,7 @@ public class ReadWriteLock {
             wait();
         }
 
-        readingThreads.put(callingThread,
-                (getReadAccessCount(callingThread) + 1));
+        readingThreads.put(callingThread, (getReadAccessCount(callingThread) + 1));
     }
 
     private boolean canGrantReadAccess(Thread callingThread) {
@@ -63,7 +77,7 @@ public class ReadWriteLock {
         writingThread = callingThread;
     }
 
-    public synchronized void unlockWrite() throws InterruptedException {
+    public synchronized void unlockWrite() {
         if (!isWriter(Thread.currentThread())) {
             throw new IllegalMonitorStateException("Calling Thread does not" +
                     " hold the write lock on this ReadWriteLock");

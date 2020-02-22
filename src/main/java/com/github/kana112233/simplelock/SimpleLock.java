@@ -1,6 +1,6 @@
 package com.github.kana112233.simplelock;
 
-public class Lock {
+public class SimpleLock {
 
     private boolean isLocked = false;
 

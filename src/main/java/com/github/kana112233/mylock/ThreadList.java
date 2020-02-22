@@ -21,7 +21,7 @@ public class ThreadList {
     }
 
     /**
-     * @param thread
+     * @param thread t
      * @return 是否只有当前一个线程在等待
      */
     public boolean push(Thread thread) {
@@ -31,8 +31,6 @@ public class ThreadList {
             node.setNext(first);
             if (unsafe.compareAndSwapObject(this, headOffset, first, node)) {
                 return first == null;
-            } else {
-                System.out.println("missing");
             }
         }
     }

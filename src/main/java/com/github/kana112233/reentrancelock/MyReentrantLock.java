@@ -1,6 +1,6 @@
 package com.github.kana112233.reentrancelock;
 
-public class MyReentranLock {
+public class MyReentrantLock {
 
     boolean isLocked = false;
     Thread lockedBy = null;
@@ -17,8 +17,7 @@ public class MyReentranLock {
         lockedBy = callingThread;
     }
 
-
-    public synchronized void unlock() {
+    public synchronized void unLock() {
         if (Thread.currentThread() == this.lockedBy) {
             lockedCount--;
 
